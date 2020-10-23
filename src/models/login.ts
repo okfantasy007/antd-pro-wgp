@@ -1,6 +1,4 @@
-import { stringify } from 'querystring';
 import { history, Reducer, Effect } from 'umi';
-
 import { fakeAccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
@@ -60,14 +58,10 @@ const Model: LoginModelType = {
 
     logout() {
       const { redirect } = getPageQuery();
+      localStorage.removeItem('app-login-token');
       // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
-        history.replace({
-          pathname: '/user/login',
-          search: stringify({
-            redirect: window.location.href,
-          }),
-        });
+      if (window.location.pathname !== '/Public/login' && !redirect) {
+        window.location.href = `http://oacenter.wondershare.cn/public/logout`;
       }
     },
   },
