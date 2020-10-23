@@ -1,6 +1,6 @@
 import { Effect, Reducer } from 'umi';
 
-import { queryCurrent, query as queryUsers } from '@/services/user';
+import { queryCurrent, queryMenus, queryAccessList, query as queryUsers } from '@/services/user';
 
 export interface CurrentUser {
   avatar?: string;
@@ -26,10 +26,14 @@ export interface UserModelType {
   effects: {
     fetch: Effect;
     fetchCurrent: Effect;
+    fetchMenus: Effect;
+    fetchAccessList: Effect;
   };
   reducers: {
     saveCurrentUser: Reducer<UserModelState>;
+    saveMenus: Reducer<UserModelState>;
     changeNotifyCount: Reducer<UserModelState>;
+    saveAccessList: Reducer<UserModelState>;
   };
 }
 
@@ -38,6 +42,9 @@ const UserModel: UserModelType = {
 
   state: {
     currentUser: {},
+    menus: [],
+    isShowAccountConfig: false,
+    accessList: [],
   },
 
   effects: {
@@ -49,11 +56,32 @@ const UserModel: UserModelType = {
       });
     },
     *fetchCurrent(_, { call, put }) {
+      // 请求数据接口
       const response = yield call(queryCurrent);
+      // 存储数据
       yield put({
         type: 'saveCurrentUser',
         payload: response,
       });
+      return response
+    },
+    *fetchMenus({ payload }, { call, put }) {
+      const response = yield call(queryMenus, payload);
+      yield put({
+        type: 'saveMenus',
+        payload: response,
+      });
+      return response
+    },
+    *fetchAccessList({ payload }, { call, put }) {
+      // 请求数据接口
+      const response = yield call(queryAccessList, payload);
+      // 存储数据
+      yield put({
+        type: 'saveAccessList',
+        payload: response,
+      });
+      return response
     },
   },
 
@@ -62,6 +90,23 @@ const UserModel: UserModelType = {
       return {
         ...state,
         currentUser: action.payload || {},
+      };
+    },
+    saveMenus(state, action) {
+      let isShow = false
+      action.payload.data.length > 0 && action.payload.data.forEach(item => {
+        if (item.action === 'menu.customer-service-management') {
+          item.children.forEach(i => {
+            if (i.action === "menu.zendesk-login") {
+              isShow = i.children.length === 0 ? false : true
+            }
+          })
+        }
+      })
+      return {
+        ...state,
+        menus: action.payload.data || [],
+        isShowAccountConfig: isShow
       };
     },
     changeNotifyCount(
@@ -77,6 +122,12 @@ const UserModel: UserModelType = {
           notifyCount: action.payload.totalCount,
           unreadCount: action.payload.unreadCount,
         },
+      };
+    },
+    saveAccessList(state, action) {
+      return {
+        ...state,
+        accessList: action.payload.data || {},
       };
     },
   },
