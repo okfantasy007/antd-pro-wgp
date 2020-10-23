@@ -8,7 +8,7 @@
 export default {
   dev: {
     '/api/': {
-      target: 'https://preview.pro.ant.design',
+      target: 'http://beta-crm-admin.wondershare.cn',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },
