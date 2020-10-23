@@ -14,8 +14,8 @@ export default defineConfig({
   locale: {
     // default zh-CN
     default: 'zh-CN',
-    antd: true,
     // default true, when it is true, will use `navigator.language` overwrite default
+    antd: true,
     baseNavigator: true,
   },
   dynamicImport: {
@@ -27,15 +27,8 @@ export default defineConfig({
   // umi routes: https://umijs.org/docs/routing
   routes: [
     {
-      path: '/user',
+      path: '/public/callback',
       component: '../layouts/UserLayout',
-      routes: [
-        {
-          name: 'login',
-          path: '/user/login',
-          component: './user/login',
-        },
-      ],
     },
     {
       path: '/',
@@ -48,7 +41,9 @@ export default defineConfig({
           routes: [
             {
               path: '/',
-              redirect: '/welcome',
+              name: 'welcome',
+              icon: 'smile',
+              component: './Welcome',
             },
             {
               path: '/welcome',
@@ -56,28 +51,7 @@ export default defineConfig({
               icon: 'smile',
               component: './Welcome',
             },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-              routes: [
-                {
-                  path: '/admin/sub-page',
-                  name: 'sub-page',
-                  icon: 'smile',
-                  component: './Welcome',
-                  authority: ['admin'],
-                },
-              ],
-            },
-            {
-              name: 'list.table-list',
-              icon: 'table',
-              path: '/list',
-              component: './ListTableList',
-            },
+
             {
               component: './404',
             },
@@ -97,8 +71,6 @@ export default defineConfig({
     // ...darkTheme,
     'primary-color': defaultSettings.primaryColor,
   },
-  // @ts-ignore
-  title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
   manifest: {
