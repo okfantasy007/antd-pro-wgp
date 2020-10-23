@@ -3,10 +3,9 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
-
+import { notification, message } from 'antd';
 const codeMessage = {
-  200: '服务器成功返回请求的数据。',
+  0: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
   202: '一个请求已经进入后台排队（异步任务）。',
   204: '删除数据成功。',
@@ -51,6 +50,42 @@ const errorHandler = (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
+});
+
+// request拦截器, 改变url 或 options.
+request.interceptors.request.use(async (url, options) => {
+  let c_token = localStorage.getItem('app-login-token');
+  if (c_token) {
+    const headers = {
+      // 'Content-Type': 'application/json',
+      // 'Accept': 'application/json',
+      'app-login-token': c_token,
+    };
+    return {
+      url: url,
+      options: { ...options, headers: headers },
+    };
+  } else {
+    return {
+      url: url,
+      options: { ...options },
+    };
+  }
+});
+
+// response拦截器, 处理response
+request.interceptors.response.use(async (response, error) => {
+  let token = response.headers.get('app-login-token');
+  if (token) {
+    localStorage.setItem('app-login-token', token);
+  }
+  const data = await response.clone().json();
+  if (data.code === 0) {
+    return response;
+  } else {
+    message.error(data.msg);
+    return response;
+  }
 });
 
 export default request;
