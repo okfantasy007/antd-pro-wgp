@@ -17,9 +17,7 @@ import { ConnectState } from '@/models/connect';
 import { getMatchMenu } from '@umijs/route-utils';
 import { getQueryObject } from '@/utils/utils';
 import logo from '../assets/logo.svg';
-import allIcons from '@@/plugin-antd-icon/icons';
-import { Icon } from '@ant-design/compatible';
-import {HomeOutlined, PicLeftOutlined, SmileOutlined, SettingOutlined,} from '@ant-design/icons';
+import {TableOutlined} from '@ant-design/icons';
 
 
 const toHump = (name: string) =>
@@ -42,7 +40,7 @@ const formatter = (data: any[]) => {
       path: item.module,
       locale: item.action,
       name: item.title,
-      icon: <HomeOutlined />,
+      icon: <TableOutlined />,
     }
     if (item.children && item.children.length > 0) {
       routerInfo = Object.assign({}, routerInfo, { children: formatter(item.children) })
@@ -65,7 +63,7 @@ const formatter = (data: any[]) => {
         try {
           // eslint-disable-next-line no-param-reassign
           // @ts-ignore
-          routerInfo.icon = <HomeOutlined />
+          routerInfo.icon = <TableOutlined />
         } catch (error) {
           console.log(error)
         }
@@ -186,12 +184,9 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     [location.pathname],
   );
 
-  const { formatMessage } = useIntl();
-
   return (
     <ProLayout
       logo={logo}
-      formatMessage={formatMessage}
       onCollapse={handleMenuCollapse}
       onMenuHeaderClick={() => history.push('/')}
       menuItemRender={(menuItemProps, defaultDom) => {
@@ -203,7 +198,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       breadcrumbRender={(routers = []) => [
         {
           path: '/',
-          breadcrumbName: formatMessage({ id: 'menu.home' }),
+          breadcrumbName: 'menu.home',
         },
         ...routers,
       ]}
