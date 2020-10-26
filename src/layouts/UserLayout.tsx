@@ -6,7 +6,7 @@ import { parse } from 'querystring';
 import { message } from 'antd';
 
 const queryParse = parse(location.search.replace('?', ''))
-localStorage.setItem('app-login-token', queryParse.token)
+localStorage.setItem('app-login-token', queryParse.token as string)
 
 const appLoginToken = localStorage.getItem('app-login-token')
 
@@ -21,15 +21,17 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
   useEffect(() => {
     debugger
     if(appLoginToken) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      }).then((res) => {
-        if (res.code === 0) {
-          history.push('/welcome');
-        } else {
-          message.error('系统异常');
-        }
-      });
+      if (dispatch) {
+        dispatch({
+          type: 'user/fetchCurrent',
+        }).then((res: { code: number; }) => {
+          if (res.code === 0) {
+            history.push('/welcome');
+          } else {
+            message.error('系统异常');
+          }
+        });
+      }
     } else {
       window.location.href = `http://oacenter.wondershare.cn/public/logout`
     }

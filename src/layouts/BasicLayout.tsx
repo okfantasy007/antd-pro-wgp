@@ -9,7 +9,7 @@ import ProLayout, {
   Settings,
 } from '@ant-design/pro-layout';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Link, useIntl, connect, Dispatch, history } from 'umi';
+import { Link, connect, Dispatch, history } from 'umi';
 import { Result, Button } from 'antd';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
@@ -19,9 +19,6 @@ import { getQueryObject } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 import {TableOutlined} from '@ant-design/icons';
 
-
-const toHump = (name: string) =>
-  name.replace(/-(\w)/g, (_all: string, letter: any) => letter.toUpperCase());
 
 const formatter = (data: any[]) => {
   // @ts-ignore

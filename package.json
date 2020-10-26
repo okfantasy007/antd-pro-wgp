@@ -53,6 +53,7 @@
     "not ie <= 10"
   ],
   "dependencies": {
+    "@ant-design/compatible": "^1.0.8",
     "@ant-design/icons": "^4.0.0",
     "@ant-design/pro-descriptions": "^1.0.19",
     "@ant-design/pro-form": "^1.0.2",
