@@ -37,11 +37,13 @@ export interface UserModelType {
   };
 }
 
+// @ts-ignore
 const UserModel: UserModelType = {
   namespace: 'user',
 
   state: {
     currentUser: {},
+    // @ts-ignore
     menus: [],
     isShowAccountConfig: false,
     accessList: [],
@@ -94,9 +96,9 @@ const UserModel: UserModelType = {
     },
     saveMenus(state, action) {
       let isShow = false
-      action.payload.data.length > 0 && action.payload.data.forEach(item => {
+      action.payload.data.length > 0 && action.payload.data.forEach((item: { action: string; children: { action: string; children: string | any[]; }[]; }) => {
         if (item.action === 'menu.customer-service-management') {
-          item.children.forEach(i => {
+          item.children.forEach((i: { action: string; children: string | any[]; }) => {
             if (i.action === "menu.zendesk-login") {
               isShow = i.children.length === 0 ? false : true
             }
