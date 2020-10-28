@@ -18,6 +18,7 @@ import { getMatchMenu } from '@umijs/route-utils';
 import { getQueryObject } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 import {TableOutlined} from '@ant-design/icons';
+import menuFakeData from '@/mock/menu';
 
 
 const formatter = (data: any[]) => {
@@ -125,14 +126,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
 
   const menuDataRef = useRef<MenuDataItem[]>([]);
 
-  useEffect(() => {
-    if (dispatch) {
-      dispatch({
-        type: 'user/fetchCurrent',
-      });
-    }
-  }, []);
-
   const [menuData = [], setMenuData] = useState([]);
   useEffect(() => {
     const Token = localStorage.getItem('app-login-token')
@@ -152,7 +145,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         .then((res: { data: string | any[]; }) => {
           if (res?.data && res?.data.length > 0) {
             // @ts-ignore
-            setMenuData(formatter(res.data || []))
+            setMenuData(formatter(menuFakeData))
+            // setMenuData(formatter(res.data || []))
           }
         });
     } else {
@@ -195,11 +189,14 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       breadcrumbRender={(routers = []) => [
         {
           path: '/',
-          breadcrumbName: 'menu.home',
+          breadcrumbName: '首页',
         },
         ...routers,
       ]}
       itemRender={(route, params, routes, paths) => {
+        if (routes.length > 1 && routes[0].path === '/' && routes[1].path === '/') {
+          return null;
+        }
         const first = routes.indexOf(route) === 0;
         return first ? (
           <Link to={paths.join('/')}>{route.breadcrumbName}</Link>

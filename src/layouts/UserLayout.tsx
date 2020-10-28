@@ -26,7 +26,7 @@ const UserLayout: React.FC<UserLayoutProps> = (props) => {
           type: 'user/fetchCurrent',
         }).then((res: { code: number; }) => {
           if (res.code === 0) {
-            history.push('/welcome');
+            history.push('/');
           } else {
             message.error('系统异常');
           }
