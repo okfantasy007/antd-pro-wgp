@@ -4,7 +4,7 @@ import React from "react";
 const Comp: React.FC<{}> = () => {
   return (
     <PageContainer>
-      LabelManagement/GroupList
+      LabelManagement/CreateGroup
     </PageContainer>
   );
 };
