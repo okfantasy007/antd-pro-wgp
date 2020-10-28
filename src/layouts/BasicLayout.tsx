@@ -186,13 +186,24 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         }
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
-      breadcrumbRender={(routers = []) => [
-        {
-          path: '/',
-          breadcrumbName: '首页',
-        },
-        ...routers,
-      ]}
+      breadcrumbRender={(routers = []) => {
+        console.log('breadcrumbRender routers', routers);
+        if (routers.length > 0 && routers[0].path === '/') {
+          return [
+            {
+              path: '/',
+              breadcrumbName: '首页',
+            }
+          ]
+        }
+        return [
+          {
+            path: '/',
+            breadcrumbName: '首页',
+          },
+          ...routers,
+        ]
+      }}
       itemRender={(route, params, routes, paths) => {
         if (routes.length > 1 && routes[0].path === '/' && routes[1].path === '/') {
           return null;
@@ -204,7 +215,10 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           <span>{route.breadcrumbName}</span>
         );
       }}
-      menuDataRender={() => menuData}
+      menuDataRender={() => {
+        console.log('menuDataRender menuData', menuData);
+        return menuData;
+      }}
       rightContentRender={() => <RightContent />}
       {...props}
       {...settings}
