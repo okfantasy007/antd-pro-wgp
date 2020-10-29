@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Form, Input, Button, Select, Divider, Row, Col } from 'antd';
 import SearchTree from './components/SearchTree';
+import styles from './index.less';
 
 const Comp: React.FC<{}> = () => {
   const [form] = Form.useForm();
@@ -75,11 +76,23 @@ const Comp: React.FC<{}> = () => {
         </Form>
         <Divider />
         <Row>
-          <Col span={6}>
+          <Col span={3}>
             <SearchTree/>
           </Col>
-          <Col span={18}>
-
+          <Col span={20} offset={1}>
+            <div className={styles.mb10}>
+              <span style={{marginRight: 40}}>当前标签（总人数100人）</span>
+              <span>更新时间：2020-09-09 06:00:00</span>
+            </div>
+            <div className={styles.mb10}>
+              <span>标签分类：基础标签</span>
+            </div>
+            <div className={styles.mb10}>
+              <span>标签类型：离线标签（例行更新）</span>
+            </div>
+            <div className={styles.mb10}>
+              <span>标签定义方式：自定义标签</span>
+            </div>
           </Col>
         </Row>
       </Card>

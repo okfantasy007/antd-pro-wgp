@@ -1,8 +1,7 @@
 import React from "react";
-import {Tree, Input} from 'antd';
+import {Tree, Input, Divider} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
-
-const {Search} = Input;
+import styles from './index.less';
 
 const x = 3;
 const y = 2;
@@ -109,7 +108,7 @@ class SearchTree extends React.Component {
           index > -1 ? (
             <span>
               {beforeStr}
-              <span className="site-tree-search-value">{searchValue}</span>
+              <span className={styles["site-tree-search-value"]}>{searchValue}</span>
               {afterStr}
             </span>
           ) : (
@@ -125,11 +124,11 @@ class SearchTree extends React.Component {
         };
       });
     return (
-      <div>
-        <Search style={{marginBottom: 8}} placeholder="搜索标签" onChange={this.onChange}/>
+      <div style={{border: '1px solid rgba(0, 0, 0, 0.06)', padding: 8}}>
         <Input placeholder="搜索标签" bordered={false} suffix={
           <SearchOutlined style={{ color: 'rgba(0,0,0,.45)', fontSize: 16}} />
         }/>
+        <Divider style={{margin: '0px auto 8px auto'}}/>
         <Tree
           onExpand={this.onExpand}
           expandedKeys={expandedKeys}
