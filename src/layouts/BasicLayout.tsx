@@ -151,7 +151,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         });
     } else {
       window.location.href = `http://oacenter.wondershare.cn/public/logout`
-    };
+    }
   }, []);
 
   /**
