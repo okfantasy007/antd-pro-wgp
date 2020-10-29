@@ -1,4 +1,3 @@
-import { PageContainer } from '@ant-design/pro-layout';
 import React from "react";
 import { Card, Form, Input, Button, Select, Divider, Row, Col } from 'antd';
 import SearchTree from './components/SearchTree';
@@ -13,7 +12,6 @@ const Comp: React.FC<{}> = () => {
     form.resetFields();
   };
   return (
-    <PageContainer>
       <Card>
         {/*LabelManagement/UserLabel*/}
         <Form
@@ -84,9 +82,7 @@ const Comp: React.FC<{}> = () => {
 
           </Col>
         </Row>
-
       </Card>
-    </PageContainer>
   );
 };
 
