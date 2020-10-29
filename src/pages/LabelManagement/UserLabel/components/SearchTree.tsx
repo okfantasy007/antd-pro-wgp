@@ -1,6 +1,6 @@
-import {Tree, Input} from 'antd';
 import React from "react";
-import 'antd/dist/antd.css';
+import {Tree, Input} from 'antd';
+import {SearchOutlined} from '@ant-design/icons';
 
 const {Search} = Input;
 
@@ -126,7 +126,10 @@ class SearchTree extends React.Component {
       });
     return (
       <div>
-        <Search style={{marginBottom: 8}} placeholder="Search" onChange={this.onChange}/>
+        <Search style={{marginBottom: 8}} placeholder="搜索标签" onChange={this.onChange}/>
+        <Input placeholder="搜索标签" bordered={false} suffix={
+          <SearchOutlined style={{ color: 'rgba(0,0,0,.45)', fontSize: 16}} />
+        }/>
         <Tree
           onExpand={this.onExpand}
           expandedKeys={expandedKeys}
