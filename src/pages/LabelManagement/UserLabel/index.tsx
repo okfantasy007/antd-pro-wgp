@@ -13,7 +13,7 @@ const Comp: React.FC<{}> = () => {
 
   const [form] = Form.useForm();
   const onFinish = (values: any) => {
-    console.log('values', values);
+    console.log(values);
     setQueryParams(values);
   };
 
