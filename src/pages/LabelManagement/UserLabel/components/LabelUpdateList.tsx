@@ -1,18 +1,21 @@
-import Input from "antd/es/input/Input";
 import React, { useRef, useState, useEffect } from 'react';
-import { history } from 'umi';
 import ProTable, { ProColumns } from '@ant-design/pro-table';
-import { Radio, Select, Row, Col, Button} from 'antd';
 import { TableListItem } from '../data.d';
 import { queryList, queryProductLines } from '../../service';
 
-const LabelUpdateList: React.FC<{}> = (props) => {
+interface CompProps {
+  queryParams:  object | null;
+}
 
+const LabelUpdateList: React.FC<CompProps> = (props) => {
   interface ActionType {
     reload: (resetPageIndex?: boolean) => void;
     fetchMore: () => void;
     reset: () => void;
   }
+
+  const {queryParams} = props;
+  console.log('queryParams', queryParams);
 
   const ref = useRef<ActionType>();
   const [totalCount, setTotalCount] = useState(0);
@@ -32,6 +35,7 @@ const LabelUpdateList: React.FC<{}> = (props) => {
     })
   }, []);
 
+  // @ts-ignore
   const genItems = (size: number) => {
     let res = [];
     for (let i = 0; i < size; i++) {
@@ -84,33 +88,12 @@ const LabelUpdateList: React.FC<{}> = (props) => {
     }
     return res;
   };
-  const onChangeProduct = (value: string) => {
-    setProduct(value);
-    // ref.current.reload(true);
-  };
-
-  const onChangeEmail = (e: Event) => {
-    // @ts-ignore
-    setEmail(e.target.value);
-  };
-
-  const onChangeUpdateTime = (e: Event) => {
-    // @ts-ignore
-    setUpdateTime(e.target.value);
-    // @ts-ignore
-    ref.current.reload(true);
-  };
 
   const query = () => {
     // @ts-ignore
     ref.current.reload(true);
   };
 
-  const reset = () => {
-    setProduct("");
-    setEmail("");
-    query();
-  };
   const ellipsisCfg = totalCount > 0 ?
     {
       ellipsis: true,
@@ -241,7 +224,7 @@ const LabelUpdateList: React.FC<{}> = (props) => {
     return res;*/
     const currentParams = {
       page: params.current,
-      page_size: params.pageSize
+      page_size: params.pageSize,
     };
     if (product) {
       currentParams.product = product;
@@ -300,16 +283,17 @@ const LabelUpdateList: React.FC<{}> = (props) => {
     }
   };
 
-  // @ts-ignore
   return (
       <ProTable<TableListItem>
         headerTitle={`${totalCount}条记录`}
         search={false}
         rowKey="uid"
         actionRef={ref}
+        // @ts-ignore
         request={requestFunc}
         columns={columns}
         scroll={{ x: 2800 }}
+        // @ts-ignore
         onChange={handleTableChange}
       />
   );
