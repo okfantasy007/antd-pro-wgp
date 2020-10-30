@@ -1,7 +1,7 @@
 import React from "react";
 import {Tree, Input, Divider} from 'antd';
 import {SearchOutlined} from '@ant-design/icons';
-import styles from './index.less';
+import styles from '../index.less';
 
 const x = 3;
 const y = 2;
@@ -112,7 +112,7 @@ class SearchTree extends React.Component {
               {afterStr}
             </span>
           ) : (
-            <span>{item.title}</span>
+            <span className={styles.bold}>{item.title}</span>
           );
         if (item.children) {
           return {title, key: item.key, children: loop(item.children)};

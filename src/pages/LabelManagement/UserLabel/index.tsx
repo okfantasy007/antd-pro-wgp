@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Form, Input, Button, Select, Divider, Row, Col } from 'antd';
+import {Form, Input, Button, Select, Divider, Row, Col, Card} from 'antd';
 import SearchTree from './components/SearchTree';
+import LabelUpdateList from './components/LabelUpdateList';
 import styles from './index.less';
 
 const Comp: React.FC<{}> = () => {
@@ -93,6 +94,13 @@ const Comp: React.FC<{}> = () => {
             <div className={styles.mb10}>
               <span>标签定义方式：自定义标签</span>
             </div>
+            <div className={`${styles.bold} ${styles.mb10}`}>
+              标签分布情况
+            </div>
+            <div className={`${styles.bold} ${styles.mb10}`}>
+              标签更新情况
+            </div>
+            <LabelUpdateList/>
           </Col>
         </Row>
       </Card>
